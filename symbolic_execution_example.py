@@ -2,15 +2,16 @@ import angr
 import claripy
 import logging
 
+from expression.components import AddOp, MulOp, SubOp, Const, Var
+from code_generation.c_code_generation import CCodeGenerator
+from symbolic_execution.symbolic_expression_extraction import SymbolicExpressionExtractor
+from code_generation.bin_code_generation import CFile
+
 logging.getLogger('angr').disabled = True
 logging.getLogger('angr').propagate = False
 logging.getLogger('cle').disabled = True
 logging.getLogger('cle').propagate = False
 
-from expression.components import *
-from code_generation.c_code_generation import CCodeGenerator
-from symbolic_execution.symbolic_expression_extraction import SymbolicExpressionExtractor
-from code_generation.bin_code_generation import CFile
 
 def main():
     print("Int example:")
@@ -52,10 +53,11 @@ def do_expr(expr, ret_type, simplified=True):
     c_file_name = 'example_c.c'
     cfile = CFile(c_file_name, code)
     bin_file_name = cfile.compile()
-
+    print(bin_file_name)
 
     print("Symbolic Expression:")
-    see  = SymbolicExpressionExtractor(bin_file_name)
+    see = SymbolicExpressionExtractor(bin_file_name)
+
     extracted_symexpr = see.extract(target_func, var_names, var_ctypes, ret_type, simplified)
     ast = extracted_symexpr.symex_expr
     print(ast)

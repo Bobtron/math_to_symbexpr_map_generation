@@ -3,13 +3,13 @@ import argparse
 import claripy
 import logging
 import os
+from symbolic_execution.symbolic_expression_extraction import SymbolicExpressionExtractor
 
 logging.getLogger('angr').disabled = True
 logging.getLogger('angr').propagate = False
 logging.getLogger('cle').disabled = True
 logging.getLogger('cle').propagate = False
 
-from symbolic_execution.symbolic_expression_extraction import SymbolicExpressionExtractor
 
 def main():
     elf_path = 'perfume_paper_examples'
@@ -54,6 +54,7 @@ def main():
     extracted_symexpr = see.extract('f_006', ['a', 'b'], ['float', 'float'], 'float', simplified=False, short_circuit_calls=short_circuit_calls)
     ast = extracted_symexpr.symex_expr
     solver = claripy.Solver()
+
     #print(solver.eval(ast, 1, extra_constraints=[var == 1.0 for var in extracted_symexpr.symvars]))
     #print(ast)
     #print(extracted_symexpr.symvars)
@@ -61,9 +62,11 @@ def main():
 
     #print(ast.eval({var: 1 for var in extracted_symexpr.symvars}))
     #print(ast)
+
     in_sym = extracted_symexpr.symex_to_infix()
     print("")
     print("".join(in_sym))
+
 
 if __name__ == '__main__':
     main()

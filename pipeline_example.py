@@ -53,9 +53,5 @@ def do_expr(expr):
     ast_z3 = claripy.backends.z3.convert(ast)
     print(ast_z3)
 
-    print("Simplified:")
-    in_sym = extracted_symexpr.symex_to_infix()
-    print("".join(in_sym))
-
 if __name__ == '__main__':
     main()

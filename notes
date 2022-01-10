@@ -1,0 +1,13 @@
+check what makes biggest difference in the signal.correlate
+very different functions
+examples from literature
+documents on cross correlation
+
+formalize problems
+
+find out exactly what the scipy correlate does
+check what assumptions are needed to be made
+    all functions have the same sampling rate
+modes and methods that can be useful
+
+fast fourier transform
